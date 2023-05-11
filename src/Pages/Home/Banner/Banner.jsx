@@ -11,7 +11,7 @@ const Banner = () => {
       <div style={{ height: "600px" }} className="carousel w-full ">
         <div id="slide1" className="carousel-item relative w-full">
           <img src={img1} className="w-full rounded-lg" />
-          <div className="backgrop absolute w-full h-full left-0 top-0 z-0 from-black to-transparent bg-gradient-to-r "></div>
+          <div className=" rounded-lg backgrop absolute w-full h-full left-0 top-0 z-0 from-black to-transparent bg-gradient-to-r "></div>
           <div className="absolute top-1/4 left-10 w-3/4 md:w-1/2 lg:w-1/3 text-white z-10">
             <h2 className="lg:text-6xl md:text-5xl text-4xl mb-2">Affordable Price For Car Servicing</h2>
             <p className="mb-2">

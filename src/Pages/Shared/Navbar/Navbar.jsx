@@ -12,7 +12,7 @@ const Navbar = () => {
   );
 
     return (
-      <div className="navbar bg-base-100 border-b-red-50 border-b-2 ">
+      <div className="navbar bg-base-100  border-b-red-50 border-b-2 ">
         <div className="navbar-start">
           {/* mobile menu */}
           <div className="dropdown">
@@ -52,6 +52,17 @@ const Navbar = () => {
         {/* desktop menu end */}
         <div className="navbar-end">
           <a className="btn btn-outline btn-warning">Appoinment</a>
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              isActive
+                ? "active btn ml-4 btn-primary"
+                : " btn btn-outline ml-4 btn-primary"
+            }
+            // className="btn btn-outline ml-4 btn-primary "
+          >
+            Login
+          </NavLink>
         </div>
       </div>
     );
