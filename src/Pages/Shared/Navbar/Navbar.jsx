@@ -1,11 +1,26 @@
-import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { AuthContenxt } from "../../../Provider/AuthProvider";
 
 
 const Navbar = () => {
+  const { logout, user, setLoading } = useContext(AuthContenxt);
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    setLoading(true)
+      logout()
+      .then(()=> {
+        navigate("/login");
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  };
 
   const navItems = (
     <>
-      <li><NavLink to="/about">Home </NavLink></li>
+      <li><NavLink to="/">Home </NavLink></li>
       <li><NavLink to="/about">About </NavLink></li>
       <li><NavLink to="/about">Item 3 </NavLink></li>
     </>
@@ -52,17 +67,21 @@ const Navbar = () => {
         {/* desktop menu end */}
         <div className="navbar-end">
           <a className="btn btn-outline btn-warning">Appoinment</a>
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              isActive
-                ? "active btn ml-4 btn-primary"
-                : " btn btn-outline ml-4 btn-primary"
-            }
-            // className="btn btn-outline ml-4 btn-primary "
-          >
-            Login
-          </NavLink>
+          {user ? (
+            <button onClick={handleLogout} className="btn btn-warning ml-4" >Log Out</button>
+          ) : (
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                isActive
+                  ? "active btn ml-4 btn-primary"
+                  : " btn btn-outline ml-4 btn-primary"
+              }
+              // className="btn btn-outline ml-4 btn-primary "
+            >
+              Login
+            </NavLink>
+          )}
         </div>
       </div>
     );
