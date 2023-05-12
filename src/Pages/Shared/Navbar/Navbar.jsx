@@ -26,14 +26,10 @@ const Navbar = () => {
       <li>
         <NavLink to="/about">About </NavLink>
       </li>
-      {user?.email ? (
-        <>
-          {" "}
-          <li>
-            <NavLink to="/bookings">My Bookings </NavLink>
-          </li>
-        </>
-      ) : null}
+      <li>
+        <NavLink to="/bookings">My Bookings </NavLink>
+      </li>
+      {user?.email ? <> </> : null}
     </>
   );
 
