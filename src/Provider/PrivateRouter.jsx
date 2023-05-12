@@ -10,7 +10,11 @@ const PrivateRouter = ({children}) => {
 
 
     if(loading){
-        return <h1 className="text-6xl text-rose-500">Loading...</h1>
+        return (
+          <div className="w-full h-screen flex items-center justify-center -mt-20 text-center">
+            <progress className="progress w-56"></progress>
+          </div>
+        );
     }else {
         if(!user){
             return <Navigate to="/login" state={{ from: location }} />;

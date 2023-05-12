@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContenxt } from "../../Provider/AuthProvider";
 import { baseServerUrl } from "../../utils/url";
+import BookingTable from "./BookingTable";
 
 const Bookings = () => {
     const [bookings, setBookings] = useState([])
@@ -19,18 +20,17 @@ const Bookings = () => {
          });
      }, [url]);
 
-     console.log(bookings);
-
+   
 
   
-      return <div>
-        <h2 className="text-2xl" >Customer Name: {user?.displayName} </h2>
-        <h2 className="text-xl" >Email: {user?.email} </h2>
-        <ul>
-            {bookings.length}
-            <li></li>
-        </ul>
-      </div>;
+      return (
+        <div>
+         
+          <h2 className="text-2xl">Customer Name: {user?.displayName} </h2>
+          <h2 className="text-xl">Email: {user?.email} </h2>
+          <BookingTable bookings={bookings} />
+        </div>
+      );
     
 
    
