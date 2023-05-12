@@ -7,7 +7,7 @@ const Bookings = () => {
     const [bookings, setBookings] = useState([])
    
     const { user } = useContext(AuthContenxt);
-     const url = `${baseServerUrl}/?email=${user?.email}`;
+     const url = `${baseServerUrl}/bookings/?email=${user?.email}`;
 
      useEffect(() => {
        fetch(url)
