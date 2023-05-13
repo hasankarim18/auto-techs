@@ -1,13 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
+import { baseServerUrl } from "../../../utils/url";
 
 
 const Services = () => {
     const [services, setServices] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:5000/services")
+        fetch(`${baseServerUrl}/services`)
           .then((res) => res.json())
           .then((data) => {
             setServices(data);

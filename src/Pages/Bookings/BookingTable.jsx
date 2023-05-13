@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { baseServerUrl } from "../../utils/url";
 import { toast } from "react-toastify";
 
+
 const BookingTable = ({ bookings }) => {
   const [showBookings, setShowBookings] = useState([]);
+ 
 
   const deleteSuccess = () => toast("Delete Booking Successfull");
 
@@ -29,6 +31,36 @@ const BookingTable = ({ bookings }) => {
         });
     }
   };
+
+  const handleBookingConfirm = (id, status)=> {
+    fetch(`${baseServerUrl}/bookings/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ status: status }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+       // console.log(data);
+        if (data.modifiedCount > 0) {
+          // update state
+          
+          const remaining = showBookings.filter(booking => booking._id !== id)
+          const updated = showBookings.find(booking => booking._id === id)
+          
+          updated.status = status;
+        
+          const newBookings = [updated, ...remaining]
+          setShowBookings(newBookings);
+          const notify = ()=> toast('Update Successful')
+          notify();
+        }
+      })
+      .catch((error) => console.log(error));
+  }
+
+  
 
   useEffect(() => {
     setShowBookings(bookings);
@@ -57,8 +89,9 @@ const BookingTable = ({ bookings }) => {
         <tbody>
           {/* row 1 */}
           {showBookings.map((booking) => {
-            const { service, img, customerName, email, price, date, _id } =
+            const { service, img, customerName, email, price, date, _id, status } =
               booking;
+            
             return (
               <tr key={booking._id}>
                 <th>
@@ -97,7 +130,21 @@ const BookingTable = ({ bookings }) => {
                 <td>{date}</td>
 
                 <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
+                  {status === 'confirm' ? (
+                    <button
+                      onClick={() => handleBookingConfirm(_id, null)}
+                      className="btn btn-success btn-sm"
+                    >
+                     Make unconfirmed
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleBookingConfirm(_id, 'confirm')}
+                      className="btn btn-warning btn-sm"
+                    >
+                      Please Confirm 
+                    </button>
+                  )}
                 </th>
               </tr>
             );

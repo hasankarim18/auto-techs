@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContenxt } from "../../Provider/AuthProvider";
+import { baseServerUrl } from "../../utils/url";
 
 
 const BookServices = () => {
@@ -29,7 +30,7 @@ const BookServices = () => {
 
         // console.log(order);
 
-       fetch("http://localhost:5000/bookings", {
+       fetch(`${baseServerUrl}/bookings`, {
          method: "POST",
          headers: {
            "Content-Type": "application/json"           
