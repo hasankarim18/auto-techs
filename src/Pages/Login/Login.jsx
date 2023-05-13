@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import img from '../../assets/images/login/login.svg'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContenxt } from '../../Provider/AuthProvider';
+import { baseServerUrl } from '../../utils/url';
 
 const Login = () => {
     const { signIn   } = useContext(AuthContenxt);
@@ -13,7 +14,7 @@ const Login = () => {
 
   
 
-    console.log(from);
+  //  console.log(from);
 
     const handleLogin = (event)=> {
         event.preventDefault()
@@ -22,8 +23,29 @@ const Login = () => {
          const email = form.email.value;
          const password = form.password.value;
          signIn(email, password)
-         .then(()=> {
-            navigate(from, { replace: true });           
+         .then((result)=> {
+            const currentUser = result.user
+            const loggedUser = {
+              email: currentUser.email 
+            }
+           // console.log(loggedUser);
+           // navigate(from, { replace: true });         
+           fetch(`${baseServerUrl}/jwt`, {
+            method:"POST",
+            headers:{
+              "content-type":"application/json"
+            },
+            body:JSON.stringify(loggedUser)
+           })  
+           .then(res => res.json())
+           .then(data => {
+          
+            // warning Local storage is not the best( second best )
+            localStorage.setItem('auto-tech-token', data.token)
+           })
+           .catch(error => {
+            console.log(error);
+           })
 
          }).catch(error => console.log(error))
     }

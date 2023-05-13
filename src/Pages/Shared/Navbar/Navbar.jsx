@@ -11,6 +11,7 @@ const Navbar = () => {
     setLoading(true)
       logout()
       .then(()=> {
+        localStorage.removeItem("auto-tech-token");
         navigate("/login");
       })
       .catch(error => {
