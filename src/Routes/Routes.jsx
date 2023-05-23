@@ -7,6 +7,7 @@ import BookServices from "../Pages/BookServices/BookServices";
 import Bookings from "../Pages/Bookings/Bookings";
 import PrivateRouter from "../Provider/PrivateRouter";
 import { baseServerUrl } from "../utils/url";
+import About from "../Pages/About/About";
 
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path:"/about",
+        element:<About />
       },
       {
         path: "/login",

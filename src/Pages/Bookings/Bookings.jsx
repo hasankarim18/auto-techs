@@ -5,17 +5,26 @@ import BookingTable from "./BookingTable";
 
 const Bookings = () => {
     const [bookings, setBookings] = useState([])
+
+
    
     const { user } = useContext(AuthContenxt);
      const url = `${baseServerUrl}/bookings/?email=${user?.email}`;
 
      useEffect(() => {
-       fetch(url)
+       fetch(url, {
+         method: "GET",
+         headers: {
+           authorization: `Bearer ${localStorage.getItem("auto-tech-token")}`,
+         },
+       })
          .then((res) => res.json())
          .then((data) => {
            setBookings(data);
          })
          .catch((error) => {
+          setBookings([])
+          // logout and then navigate to login page
            console.log(error);
          });
      }, [url]);

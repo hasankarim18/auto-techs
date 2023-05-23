@@ -9,11 +9,11 @@ import AuthProvider from './Provider/AuthProvider';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="max-w-7xl mx-auto">
-    <React.StrictMode>
+    <React.Fragment>
       <AuthProvider>
         <ToastContainer />
         <RouterProvider router={router} />
       </AuthProvider>
-    </React.StrictMode>
+    </React.Fragment>
   </div>
 );

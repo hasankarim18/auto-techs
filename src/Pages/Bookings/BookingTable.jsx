@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { baseServerUrl } from "../../utils/url";
 import { toast } from "react-toastify";
+import BookingsRow from "./BookingsRow";
+import {  useNavigate } from "react-router-dom";
 
 
 const BookingTable = ({ bookings }) => {
+  
+ // console.log(bookings);
+ const navigate = useNavigate()
   const [showBookings, setShowBookings] = useState([]);
- 
+
+  const navigateToLogin = ()=> {
+    navigate('/login')
+  }
 
   const deleteSuccess = () => toast("Delete Booking Successfull");
 
@@ -62,13 +70,23 @@ const BookingTable = ({ bookings }) => {
 
   
 
-  useEffect(() => {
-    setShowBookings(bookings);
+  useEffect(() => {  
+
+    setShowBookings(bookings)
+    
   }, [bookings]);
+
+ 
 
   return (
     <div className="overflow-x-auto w-full my-8 ">
       <h3 className="text-4xl">Total Bookings: {showBookings.length} </h3>
+      {bookings?.error && (
+        <div className="my-8 bg-rose-400 bg-opacity-30 text-3xl font-bold text-center capitalize py-4">
+          {bookings.message}. Please{" "}
+          <span onClick={navigateToLogin} className="cursor-pointer underline text-blue-400 ">Login Again</span>
+        </div>
+      )}
       <table className="table w-full">
         {/* head */}
         <thead>
@@ -88,67 +106,14 @@ const BookingTable = ({ bookings }) => {
         </thead>
         <tbody>
           {/* row 1 */}
-          {showBookings.map((booking) => {
-            const { service, img, customerName, email, price, date, _id, status } =
-              booking;
-            
-            return (
-              <tr key={booking._id}>
-                <th>
-                  <button
-                    onClick={() => deleteBooking(_id)}
-                    className="w-8 h-8 bg-black text-white flex items-center justify-center rounded-full cursor-pointer"
-                  >
-                    {/* <input type="checkbox" className="checkbox" /> */}X
-                  </button>
-                </th>
-                <td>
-                  <div className="text-xl">Name: {customerName}</div>
-                  <div>Email: {email}</div>
-                </td>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div>
-                      <div className="font-bold">{service}</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      {img && (
-                        <img
-                          src={img}
-                          className="w-40 h-40"
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </td>
-                <td>${price}</td>
-                <td>{date}</td>
+          {!bookings?.error ? (
+            <BookingsRow
+              handleBookingConfirm={handleBookingConfirm}
+              showBookings={bookings}
+              deleteBooking={deleteBooking}
+            />
+          ) : null}
 
-                <th>
-                  {status === 'confirm' ? (
-                    <button
-                      onClick={() => handleBookingConfirm(_id, null)}
-                      className="btn btn-success btn-sm"
-                    >
-                     Make unconfirmed
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleBookingConfirm(_id, 'confirm')}
-                      className="btn btn-warning btn-sm"
-                    >
-                      Please Confirm 
-                    </button>
-                  )}
-                </th>
-              </tr>
-            );
-          })}
           {/* row 2 */}
         </tbody>
       </table>

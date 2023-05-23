@@ -4,6 +4,7 @@ import img from '../../assets/images/login/login.svg'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContenxt } from '../../Provider/AuthProvider';
 import { baseServerUrl } from '../../utils/url';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const Login = () => {
     const { signIn   } = useContext(AuthContenxt);
@@ -29,23 +30,9 @@ const Login = () => {
               email: currentUser.email 
             }
            // console.log(loggedUser);
-           // navigate(from, { replace: true });         
-           fetch(`${baseServerUrl}/jwt`, {
-            method:"POST",
-            headers:{
-              "content-type":"application/json"
-            },
-            body:JSON.stringify(loggedUser)
-           })  
-           .then(res => res.json())
-           .then(data => {
-          
-            // warning Local storage is not the best( second best )
-            localStorage.setItem('auto-tech-token', data.token)
-           })
-           .catch(error => {
-            console.log(error);
-           })
+           // navigate(from, { replace: true });  
+         //  jwt login 
+           
 
          }).catch(error => console.log(error))
     }
@@ -91,6 +78,9 @@ const Login = () => {
                 </div>
               </div>
             </form>
+
+            <SocialLogin />
+
             <p className="text-xl text-center pb-8 ">
               New to Auto Techs?{" "}
               <Link className="text-orange-600 font-bold" to="/signup">
